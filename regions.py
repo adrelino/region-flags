@@ -68,11 +68,11 @@ def load_subregions():
     entries.extend(load_subregion_entries('data/iso-3166-2-us.tsv'))
     entries.extend(load_subregion_entries('data/iso-3166-2-gb.tsv'))
     entries.extend(load_subregion_entries('data/iso-3166-2-ca.tsv'))
-    entries.extend(load_subregion_entries('data/iso-3166-2-at.tsv'))
+    entries.extend(load_subregion_entries('data/iso-3166-2-ch.tsv'))
 
     subregions = [e for e in entries if
                   e['Subdivision category']
-                  in ['province', 'territory', 'country', 'state', 'district'] and
+                  in ['province', 'territory', 'country', 'state', 'district', 'canton'] and
                   e['Language code'] == 'en'] # US states and DC, Canadian provinces and territories, countries of GB
 
     subregions = {e['3166-2 code']: e for e in subregions}
