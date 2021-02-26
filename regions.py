@@ -59,7 +59,7 @@ def load_regions():
 def strip_accents(s):
     return ''.join(c
         for c in unicodedata.normalize('NFD', s)
-        if unicodedata.category(c) != 'Mn'
+        if not unicodedata.name(c).endswith('ACCENT') #if unicodedata.category(c) != 'Mn' #https://stackoverflow.com/questions/44576486/how-to-remove-just-the-accents-but-not-umlauts-from-strings-in-python
     )
 
 def strip_brackets(s):
@@ -125,6 +125,30 @@ def load_subregions():
         for e in load_subregion_entries('data/iso-3166-2-mx.tsv')
         if e['Language code'] == 'es'
         and e['Subdivision category'] in ['state', 'federal district']
+    })
+
+    # DE: Land (16)
+    subregions.update({
+        e['3166-2 code']: {
+            'Subdivision name': strip_accents(e['Subdivision name']),
+        }
+        for e in load_subregion_entries('data/iso-3166-2-de.tsv')
+    })
+
+    # AT: State (9)
+    subregions.update({
+        e['3166-2 code']: {
+            'Subdivision name': strip_accents(e['Subdivision name']),
+        }
+        for e in load_subregion_entries('data/iso-3166-2-at.tsv')
+    })
+
+    # CH: Canton (26)
+    subregions.update({
+        e['3166-2 code']: {
+            'Subdivision name': e['Subdivision name'],
+        }
+        for e in load_subregion_entries('data/iso-3166-2-ch.tsv')
     })
 
     return subregions

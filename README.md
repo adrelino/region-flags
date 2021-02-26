@@ -33,6 +33,9 @@ The sub-regions currently covered are:
 - Canadian provinces and territories
 - Countries of England, Scotland, and Wales in Great Britain
 - The province Northern Ireland in Great Britain
+- States of Germany
+- States of Austria
+- Cantons of Switzerland
 
 The flags are downloaded from Wikipedia. When Wikipedia flags were copyrighted,
 we worked we Wikipedia editors to either relicense them, or drew / sourced and
@@ -65,6 +68,8 @@ to _wave_ PNG flags.
 - [`dos2unix`](http://sourceforge.net/projects/dos2unix/)
 - `rsvg-convert` part of [`librsvg`](https://wiki.gnome.org/Projects/LibRsvg)
 - [`optipng`](http://optipng.sourceforge.net/)
+
+sudo apt install dos2unix librsvg2-bin
 
 # Updating
 

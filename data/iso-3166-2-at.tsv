@@ -1,0 +1,20 @@
+; ISO 3166-2:AT
+; Source: https://www.iso.org/obp/ui/#iso:code:3166:AT
+;    and: https://en.wikipedia.org/wiki/ISO_3166-2:AT
+; Extracted on: 20210226
+; 
+; Subdivision category	3166-2 code	Subdivision name	Language code	Romanization system	Parent subdivision
+state	AT-1	Burgenland	de		
+state	AT-2	Kärnten	de		
+state	AT-2	Carinthia	de		
+state	AT-3	Niederösterreich	de		
+state	AT-3	Lower Austria	en		
+state	AT-4	Oberösterreich	de		
+state	AT-4	Upper Austria	en		
+state	AT-5	Salzburg	de		
+state	AT-6	Steiermark	de		
+state	AT-6	Styria	en		
+state	AT-7	Tirol	de		
+state	AT-8	Vorarlberg	de		
+state	AT-9	Wien	de
+state	AT-9	Vienna	en

@@ -1,0 +1,31 @@
+; ISO 3166-2:DE
+; Source: https://www.iso.org/obp/ui/#iso:code:3166:DE 
+;    and: https://en.wikipedia.org/wiki/ISO_3166-2:DE
+; Extracted on: 20210226
+; 
+; Subdivision category	3166-2 code	Subdivision name	Language code	Romanization system	Parent subdivision
+Land	DE-BW	Baden-Württemberg	de		
+Land	DE-BY	Bayern	de		
+Land	DE-BY	Bavaria	en		
+Land	DE-BE	Berlin	de		
+Land	DE-BB	Brandenburg	de		
+Land	DE-HB	Bremen	de		
+Land	DE-HH	Hamburg	de		
+Land	DE-HE	Hessen	de		
+Land	DE-HE	Hesse	en		
+Land	DE-MV	Mecklenburg-Vorpommern	de		
+Land	DE-MV	Mecklenburg-Western Pomerania	en		
+Land	DE-NI	Niedersachsen	de		
+Land	DE-NI	Lower Saxony	en		
+Land	DE-NW	Nordrhein-Westfalen	de		
+Land	DE-NW	North Rhine-Westphalia	en		
+Land	DE-RP	Rheinland-Pfalz	de		
+Land	DE-RP	Rhineland-Palatinate	en		
+Land	DE-SL	Saarland	de		
+Land	DE-SN	Sachsen	de		
+Land	DE-SN	Saxony	en		
+Land	DE-ST	Sachsen-Anhalt	de		
+Land	DE-ST	Saxony-Anhalt	en		
+Land	DE-SH	Schleswig-Holstein	de		
+Land	DE-TH	Thüringen	de
+Land	DE-TH	Thuringia	en
