@@ -1,6 +1,8 @@
+// based on https://github.com/hampusborgos/country-flags/blob/master/scripts/build-pngs.js -->
 var process = require('process')
 var exec = require('child_process').exec
 var fs = require('fs')
+var path = require('path')
 
 var help_message = "You must pass one argument to build-pngs. It should be target dimension in the format `200:` for width 200px, or `:200` for height 200px."
 var svg_directory = 'svg/'
@@ -88,6 +90,12 @@ function get_all_svgs(callback) {
 
 function convert_and_compress_svg(path_to_svg, callback) {
     var path_to_tmp_png = path_to_svg.substring(0, path_to_svg.length - 4) + '.png'
+
+    var outpath = path.join(get_output_directory(),path.basename(path_to_tmp_png));
+    if(fs.existsSync(outpath)){
+        console.log(outpath + " exists");
+        callback()
+    }
     var svgexport_command = "svgexport " + path_to_svg + " " + path_to_tmp_png + " pad " + get_output_dimensions()
     console.log(svgexport_command)
     exec(svgexport_command, (error, stdout, stderr) => {
@@ -117,13 +125,12 @@ function convert_all_files(svgs, callback) {
 
     function do_next_file() {
         console.log("Converting [" + (i+1) + "/" + svgs.length + "] " + svgs[i])
-        convert_and_compress_svg(svg_directory + svgs[i], do_next_file)
-
         ++i
         if (i >= svgs.length) {
             callback()
             return
         }
+        convert_and_compress_svg(svg_directory + svgs[i-1], do_next_file)
     }
 
     do_next_file()

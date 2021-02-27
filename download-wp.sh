@@ -10,7 +10,7 @@ while read region htmlurl ; do
 	png="png/$region.png"
 
 	if ! test -s "$html"; then
-		rm -f "$html" "$svg" "$png"
+		#rm -f "$html" "$svg" "$png"
 		echo "Downloading:	$region	$htmlurl"
 		if ! wget -q -O "$html" "${htmlurl}"; then
 			echo "ERROR: failed downloading html: ${htmlurl}"
