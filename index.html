@@ -1,11 +1,11 @@
 <html>
-	<!-- originates from https://github.com/hampusborgos/country-flags/blob/gh-pages/index.html -->
+	<!-- based on https://github.com/hampusborgos/country-flags/blob/gh-pages/index.html -->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 		<meta name="referrer" content="strict-origin-when-cross-origin">
-		<title>Some region flags in SVG</title>
+		<title>All region and selected sub-region flags</title>
 
 		<style>
 		html {
@@ -23,86 +23,106 @@
 			display: inline-block;
 		}
 
-		#flags {
+		.flags {
 			display: flex;
 			flex-wrap: wrap;
-			margin: -10px;
+			/* margin: -10px; */
 		}
 
 		.flag {
-			width: 200px;
-			height: 200px;
+			/* width: 200px; */
+			/*height: 64px;*/
 			background-color: #e8e8e8;
-			padding: 10px;
-			margin: 10px;
-			display: flex;
+			padding: 2px;
+			margin: 2px;
+			font-size:8px;
+			/* display: flex; */
 			justify-content: space-between;
-			flex-direction: column;
+			flex-direction: row;
 		}
 
 		.flag img {
-			width: 100%;
-			max-height: 160px;
-		}
+			max-height: 64px;
+		} 
 
 		.flag figcaption {
 			text-align: center;
 		}
 
 		/* Non-rect screens (e.g. notch-screens like iPhone X, Pixel 3 XL, etc.) */
-		@supports(padding: max(0px)) {
+		/*@supports(padding: max(0px)) {
 			html {
 				padding-left: max(16px, env(safe-area-inset-left));
 				padding-right: max(16px, env(safe-area-inset-right));
 			}
-		}
+		}*/
 		</style>
 	</head>
 	<body>
-		<h1>All country flags in SVG</h1>
-		<p>Accurate renderings of the flags of all countries available as PNG and SVG.</p>
-		<p>Easiest way to get them is to clone the git repository:</p>
-		<tt>git clone git@github.com:hampusborgos/country-flags.git</tt>
-		<p>Or go to the <a href="https://github.com/hampusborgos/country-flags">Github page</a> to read more</p>
-		<p>Kosovo is listed as <tt>XK</tt>. This is a user-assigned code per ISO-3166, and is in use by several multinational organizations.</p>
-		<div id="flags">
-			<figure class="flag">
-				<img src="svg/AT-1.svg">
-				<figcaption>
-					Andorra
-				</figcaption>
-			</figure>
-		</div>
+		<h1>All region and selected sub-region flags</h1>
+		<p>A collection of flags in SVG and PNG format for geographic region and sub-region codes. The image data is collected form wikipedia.</p>
+		<p>Based on <a href="https://github.com/hampusborgos/country-flags">hampusborgos/country-flags</a> and <a href="https://github.com/behdad/region-flags">behdad/region-flags</a></p>
+		<h2>All region flags</h2>
+		<p>The regions are based on the region data from <a href="http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">BCP 47</a></p>
+		<div id="region-flags" class="flags"></div>
+		<h2>Selected sub-region flags</h2>
+		<ul id="subregion-list"></ul>
+		<div id="subregion-flags" class=flags></div>
 	</body>
 
 	<script type="text/javascript">
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (xhttp.readyState == 4 && xhttp.status == 200) {
-				countriesLoaded(JSON.parse(xhttp.responseText));
-			}
-		};
-		xhttp.open("GET", "regions.json", true);
-		xhttp.send()
+		var data = {}
+		function loadJSON(filename,id,obj){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					obj[filename]=JSON.parse(xhttp.responseText);
+					countriesLoaded(obj[filename],id);
+				}
+			};
+			xhttp.open("GET", filename, true);
+			xhttp.send()
+		}
+		loadJSON("regions.json","region-flags",data)
+		loadJSON("subregions.json","subregion-flags",data)
+
+		function iso(code){
+			return "<a href='https://www.iso.org/obp/ui/#iso:code:3166:"+code+"'>ISO 3166-2:"+code+"</a>"
+		}
+		//document.getElementById("isolinks").innerHTML = ["AT","CA","CH","DE","GB","MX","US"].map(iso)
 
 		// Do stuff when we got the list of all countries
 		function renderCountry(code, country) {
 			return (
 				'<figure class="flag">' +
-					'<img src="svg/' + code + '.svg">' +
+					'<a href="html/' + code + '"><img src="svg/' + code + '.svg"></a>' +
 					'<figcaption>' +
-					country +
+					code +": "+country +
 					'</figcaption>' +
 				'</figure>'
 			);
 		}
 
-		function countriesLoaded(countries) {
+		function countriesLoaded(countries,id) {
 			var flagsHtml = '';
+			var counts = {};
 			for (var code in countries) {
+				var alpha2 = code[0]+code[1];
+				if(!counts[alpha2]) counts[alpha2]=0;
+				counts[alpha2]++;
 				flagsHtml += renderCountry(code, countries[code]) + '\n';
 			}
-			document.getElementById('flags').innerHTML = flagsHtml;
+			document.getElementById(id).innerHTML = flagsHtml;
+			if(id.indexOf("subregion")==0){
+				var ul = document.getElementById("subregion-list");
+				for(var c in counts){
+					var cname = data["regions.json"][c];
+					let li = document.createElement('li');
+					ul.appendChild(li);
+					li.innerHTML += `${counts[c]} from ${iso(c)} of ${cname} (${c})`
+				}
+			}
 		}
+
 	</script>
 </html>
