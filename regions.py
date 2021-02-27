@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+import json
 
 
 def load_aliases(filename):
@@ -153,17 +154,26 @@ def load_subregions():
 
     return subregions
 
+def write_json(data,field,filename):
+    dict = {}
+    keys = sorted(data.keys())
+    for k in keys:
+        dict[k]=data[k][field]
+    with open (filename,'w') as outfile:
+        json.dump(dict,outfile,indent=4,sort_keys=True)
 
 def load_all():
     regions = load_regions()
     keys = sorted(regions.keys())
     for k in keys:
         print('%s    %s' % (k, regions[k]))
+    write_json(regions,'Description',"regions.json")
 
     subregions = load_subregions()
     keys = sorted(subregions.keys())
     for k in keys:
         print('%s   %s' % (k, subregions[k]))
+    write_json(subregions,'Subdivision name',"subregions.json")
 
 
 if __name__ == '__main__':

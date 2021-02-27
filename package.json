@@ -1,4 +1,11 @@
 {
   "name": "region-flags",
-  "version": "1.1.0"
+  "version": "1.1.0",
+  "dependencies": {
+    "imagemin-cli": "^6.0.0",
+    "svgexport": "^0.4.1"
+  },
+  "scripts": {
+    "build-pngs": "node scripts/build-pngs.js"
+  }
 }

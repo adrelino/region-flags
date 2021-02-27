@@ -1,0 +1,108 @@
+<html>
+	<!-- originates from https://github.com/hampusborgos/country-flags/blob/gh-pages/index.html -->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+		<meta name="referrer" content="strict-origin-when-cross-origin">
+		<title>Some region flags in SVG</title>
+
+		<style>
+		html {
+		  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+		  font-size:16px;
+		  line-height: 1.15;
+		  -webkit-text-size-adjust: 100%;
+		  padding:20px 16px;
+		}
+
+		tt {
+			background-color: #333;
+			color: white;
+			padding: 10px;
+			display: inline-block;
+		}
+
+		#flags {
+			display: flex;
+			flex-wrap: wrap;
+			margin: -10px;
+		}
+
+		.flag {
+			width: 200px;
+			height: 200px;
+			background-color: #e8e8e8;
+			padding: 10px;
+			margin: 10px;
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column;
+		}
+
+		.flag img {
+			width: 100%;
+			max-height: 160px;
+		}
+
+		.flag figcaption {
+			text-align: center;
+		}
+
+		/* Non-rect screens (e.g. notch-screens like iPhone X, Pixel 3 XL, etc.) */
+		@supports(padding: max(0px)) {
+			html {
+				padding-left: max(16px, env(safe-area-inset-left));
+				padding-right: max(16px, env(safe-area-inset-right));
+			}
+		}
+		</style>
+	</head>
+	<body>
+		<h1>All country flags in SVG</h1>
+		<p>Accurate renderings of the flags of all countries available as PNG and SVG.</p>
+		<p>Easiest way to get them is to clone the git repository:</p>
+		<tt>git clone git@github.com:hampusborgos/country-flags.git</tt>
+		<p>Or go to the <a href="https://github.com/hampusborgos/country-flags">Github page</a> to read more</p>
+		<p>Kosovo is listed as <tt>XK</tt>. This is a user-assigned code per ISO-3166, and is in use by several multinational organizations.</p>
+		<div id="flags">
+			<figure class="flag">
+				<img src="svg/AT-1.svg">
+				<figcaption>
+					Andorra
+				</figcaption>
+			</figure>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				countriesLoaded(JSON.parse(xhttp.responseText));
+			}
+		};
+		xhttp.open("GET", "regions.json", true);
+		xhttp.send()
+
+		// Do stuff when we got the list of all countries
+		function renderCountry(code, country) {
+			return (
+				'<figure class="flag">' +
+					'<img src="svg/' + code + '.svg">' +
+					'<figcaption>' +
+					country +
+					'</figcaption>' +
+				'</figure>'
+			);
+		}
+
+		function countriesLoaded(countries) {
+			var flagsHtml = '';
+			for (var code in countries) {
+				flagsHtml += renderCountry(code, countries[code]) + '\n';
+			}
+			document.getElementById('flags').innerHTML = flagsHtml;
+		}
+	</script>
+</html>
