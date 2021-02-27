@@ -1,9 +1,10 @@
 # Introduction
 
 This package is a collection of flags for geographic region and sub-region codes.
-The regions are based on the data from [BCP 47][0] and selected sub-regions (US
-states, Canadian provinces and territories, and some sub-regions of Great Britain)
-are based on [ISO 3166-2:US][1], [ISO 3166-2:CA][2], and [ISO-3166-2:GB][2].
+
+# Regions
+
+The regions are based on the data from [BCP 47][0].
 
 Most people think of these regions from BCP 47 as country flags, but there are a
 few codes / flags that do not correspond to countries. The flags are in SVG and
@@ -27,15 +28,19 @@ Some regions do not have their own flag. In such cases, they are symlinked to
 the best flag to represent them, which in most cases is the flag of their
 regional or political parent. These are listed in file `ALIASES`.
 
+# Sub-regions
+
 The sub-regions currently covered are:
 
-- US states and the District of Columbia
-- Canadian provinces and territories
-- Countries of England, Scotland, and Wales in Great Britain
-- The province Northern Ireland in Great Britain
-- States of Germany
-- States of Austria
-- Cantons of Switzerland
+- US states and the District of Columbia [ISO 3166-2:US][1]
+- Canadian provinces and territories [ISO 3166-2:CA][3]
+- Countries of England, Scotland, and Wales and the province Northern Ireland in Great Britain [ISO-3166-2:GB][2].
+- States of Germany [ISO-3166-2:DE][4]
+- States of Austria [ISO-3166-2:AT][5]
+- Cantons of Switzerland [ISO-3166-2:CH][6]
+- States and federal district of Mexico [ISO-3166-2:MX][7]
+
+# Source and Copyright
 
 The flags are downloaded from Wikipedia. When Wikipedia flags were copyrighted,
 we worked we Wikipedia editors to either relicense them, or drew / sourced and
@@ -69,12 +74,16 @@ to _wave_ PNG flags.
 - `rsvg-convert` part of [`librsvg`](https://wiki.gnome.org/Projects/LibRsvg)
 - [`optipng`](http://optipng.sourceforge.net/)
 
-sudo apt install dos2unix librsvg2-bin
+`sudo apt install dos2unix librsvg2-bin`
 
 # Updating
 
 If new regions are needed, update `language-subtag-registry` from [IANA Language
-Subtag Registry][0], or add new regions to `language-subtag-private` before.  Then
+Subtag Registry][0], e.g. via
+```bash
+wget -O data/language-subtag-registry http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+```
+, or add new regions to `language-subtag-private` before.  Then
 update `data/ALIASES` and `data/ALIASES-WP` as needed.
 
 If a specific flag on Wikipedia flag is under Creative Commons, work with Wikipedia
@@ -87,6 +96,13 @@ To download missing flags, run `download-wp.py`.
 To update to latest flags from Wikipedia, delete the `html`, `svg`, and `png`
 directories, then run `make-aliases.sh` followed by `download-wp.py`.
 
+# Export
+
+To get small PNGs directly from the SVGs (and not from the big PNGs) run
+`npm install`
+then
+`npm run build-pngs -- :64` to get 64px high files, use 64: to get 64 pixel wide files.
+the build-pngs.js script is based on https://github.com/hampusborgos/country-flags
 
 # License
 
@@ -96,3 +112,7 @@ See file `COPYING` for details.
 [1]: https://www.iso.org/obp/ui/#iso:code:3166:US
 [2]: https://www.iso.org/obp/ui/#iso:code:3166:GB
 [3]: https://www.iso.org/obp/ui/#iso:code:3166:CA
+[4]: https://www.iso.org/obp/ui/#iso:code:3166:DE
+[5]: https://www.iso.org/obp/ui/#iso:code:3166:AT
+[6]: https://www.iso.org/obp/ui/#iso:code:3166:CH
+[7]: https://www.iso.org/obp/ui/#iso:code:3166:MX
