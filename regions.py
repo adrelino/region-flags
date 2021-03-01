@@ -63,6 +63,12 @@ def strip_accents(s):
         if not unicodedata.name(c).endswith('ACCENT') #if unicodedata.category(c) != 'Mn' #https://stackoverflow.com/questions/44576486/how-to-remove-just-the-accents-but-not-umlauts-from-strings-in-python
     )
 
+
+def full_title(s):
+    parts = s.split(", ")
+    return " ".join(parts[::-1])
+
+
 def strip_brackets(s):
     return re.sub(r' \[.*\]', '', s)
 
@@ -138,13 +144,24 @@ def load_subregions():
         and e['Subdivision category'] in ['state', 'territory']
     })
 
+    # ES: Autonomous communities(17) and autonomous cities in North Africa (2)
+    subregions.update({
+        e['3166-2 code'].rstrip("*"): {
+            'Subdivision name': full_title(strip_brackets(e['Subdivision name'])),
+        }
+        for e in load_subregion_entries('data/iso-3166-2-es.tsv')
+        if e['Subdivision category'] in ['autonomous community',
+                                         'autonomous city in North Africa']
+        and not e['Subdivision name'].endswith('*')
+    })
+
     # DE: Land (16)
     subregions.update({
         e['3166-2 code']: {
             'Subdivision name': strip_accents(e['Subdivision name']),
         }
         for e in load_subregion_entries('data/iso-3166-2-de.tsv')
-    })
+    })#DE
 
     # AT: State (9)
     subregions.update({
@@ -152,7 +169,7 @@ def load_subregions():
             'Subdivision name': strip_accents(e['Subdivision name']),
         }
         for e in load_subregion_entries('data/iso-3166-2-at.tsv')
-    })
+    })#AT
 
     # CH: Canton (26)
     subregions.update({
@@ -160,7 +177,7 @@ def load_subregions():
             'Subdivision name': e['Subdivision name'],
         }
         for e in load_subregion_entries('data/iso-3166-2-ch.tsv')
-    })
+    })#CH
 
     return subregions
 
