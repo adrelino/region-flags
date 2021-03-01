@@ -72,6 +72,11 @@ def full_title(s):
 def strip_brackets(s):
     return re.sub(r' \[.*\]', '', s)
 
+def replace_accents(s):
+    return re.sub(r'’', '\'', s)
+
+def strip_round_brackets(s):
+    return re.sub(r' \(.*\)', '', s)
 
 def load_subregion_entries(filename):
     entries = []
@@ -153,6 +158,14 @@ def load_subregions():
         if e['Subdivision category'] in ['autonomous community',
                                          'autonomous city in North Africa']
         and not e['Subdivision name'].endswith('*')
+    })
+
+    # FR all (127):
+    subregions.update({
+        e['3166-2 code'].rstrip("*"): {
+            'Subdivision name': strip_round_brackets(e['Subdivision name']),
+        }
+        for e in load_subregion_entries('data/iso-3166-2-fr.tsv')
     })
 
     # IE:
