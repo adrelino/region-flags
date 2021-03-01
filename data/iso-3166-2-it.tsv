@@ -1,5 +1,7 @@
 ; ISO 3166-2:IT
 ; Source: https://www.iso.org/obp/ui/#iso:code:3166:IT
+;    and: https://en.wikipedia.org/wiki/ISO_3166-2:IT
+;    and: https://en.wikipedia.org/wiki/Regions_of_Italy
 ; Extracted on: 20170331
 ; 
 ; Subdivision category	3166-2 code	Subdivision name	Language code	Romanization system	Parent subdivision
@@ -124,15 +126,22 @@ region	IT-36	Friuli-Venezia Giulia	it
 region	IT-62	Lazio	it		
 region	IT-42	Liguria	it		
 region	IT-25	Lombardia	it		
+region	IT-25	Lombardy	en		
 region	IT-57	Marche	it		
 region	IT-67	Molise	it		
 region	IT-21	Piemonte	it		
+region	IT-21	Piedmont	en		
 region	IT-75	Puglia	it		
+region	IT-75	Apulia	en		
 region	IT-88	Sardegna	it		
+region	IT-88	Sardinia	en		
 region	IT-82	Sicilia	it		
+region	IT-82	Sicily	en		
 region	IT-52	Toscana	it		
+region	IT-52	Tuscany	en		
 region	IT-32	Trentino-Alto Adige	it		
 region	IT-32	Trentino-Südtirol	de		
+region	IT-32	Trentino-South Tyrol	en		
 region	IT-55	Umbria	it		
 region	IT-23	Val d'Aoste	fr		
 region	IT-23	Valle d'Aosta	it		
