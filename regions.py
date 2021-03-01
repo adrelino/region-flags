@@ -155,6 +155,15 @@ def load_subregions():
         and not e['Subdivision name'].endswith('*')
     })
 
+    # IE:
+    subregions.update({
+        e['3166-2 code']: {
+            'Subdivision name': strip_accents(e['Subdivision name']),
+        }
+        for e in load_subregion_entries('data/iso-3166-2-ie.tsv')
+        if e['Subdivision category'] in ['province']
+    })
+
     # IT:
     subregions.update({
         e['3166-2 code']: {
