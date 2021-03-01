@@ -63,11 +63,11 @@
 		<p>A collection of flags in SVG and PNG format for geographic region and sub-region codes. The image data is collected form wikipedia.</p>
 		<p>Based on <a href="https://github.com/hampusborgos/country-flags">hampusborgos/country-flags</a> and <a href="https://github.com/behdad/region-flags">behdad/region-flags</a></p>
 		<h2>All region flags</h2>
-		<p>The regions are based on the region data from <a href="http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">BCP 47</a></p>
+		<p>The <span id="region-count"></span> regions are based on the region data from <a href="http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry">BCP 47</a></p>
 		<div id="region-flags" class="flags"></div>
 		<h2>Selected sub-region flags</h2>
 		<ul id="subregion-list"></ul>
-		<div id="subregion-flags" class=flags></div>
+		<!-- <div id="subregion-flags" class=flags></div> -->
 	</body>
 
 	<script type="text/javascript">
@@ -104,22 +104,35 @@
 		}
 
 		function countriesLoaded(countries,id) {
-			var flagsHtml = '';
-			var counts = {};
-			for (var code in countries) {
-				var alpha2 = code[0]+code[1];
-				if(!counts[alpha2]) counts[alpha2]=0;
-				counts[alpha2]++;
-				flagsHtml += renderCountry(code, countries[code]) + '\n';
-			}
-			document.getElementById(id).innerHTML = flagsHtml;
-			if(id.indexOf("subregion")==0){
+			if(id.indexOf("region")==0){
+				var flagsHtml = '';
+				var count = 0;
+				for (var code in countries) {
+					count++
+					flagsHtml += renderCountry(code, countries[code]) + '\n';
+				}
+				document.getElementById("region-count").innerHTML = count;
+				document.getElementById(id).innerHTML = flagsHtml;
+			}else if(id.indexOf("subregion")==0){
+				var counts = {};
+				for (var code in countries) {
+					var alpha2 = code[0]+code[1];
+					if(!counts[alpha2]){
+						counts[alpha2]={num: 0, flagsHtml : ""};
+					}
+					counts[alpha2].num++;
+					counts[alpha2].flagsHtml += renderCountry(code, countries[code]) + '\n';
+				}
 				var ul = document.getElementById("subregion-list");
 				for(var c in counts){
 					var cname = data["regions.json"][c];
 					let li = document.createElement('li');
 					ul.appendChild(li);
-					li.innerHTML += `${counts[c]} from ${iso(c)} of ${cname} (${c})`
+					li.innerHTML += `${counts[c].num} from ${iso(c)} of ${cname} (${c})`
+					let div = document.createElement('span');
+					div.classList.add("flags");
+					li.appendChild(div);
+					div.innerHTML += counts[c].flagsHtml;
 				}
 			}
 		}
