@@ -8,4 +8,4 @@ python3 ./regions-wp.py > SOURCES
 #mkdir -p html svg png
 
 bash ./download-wp.sh
-#bash ./make-aliases.sh
+bash ./make-aliases.sh

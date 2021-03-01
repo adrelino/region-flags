@@ -7,7 +7,7 @@ while read dst src; do
 	for dir in html svg png; do
 		s="$dir/$src.$dir"
 		d="$dir/$dst.$dir"
-
+		rm "$d"
 		if test -f "$d"; then
 			echo "ERROR: $d exist; skipping"
 			continue
