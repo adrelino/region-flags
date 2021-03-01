@@ -19,6 +19,7 @@ metropolitan department	FR-67	Bas-Rhin		fr		FR-GES
 metropolitan department	FR-13	Bouches-du-Rhône		fr		FR-PAC
 metropolitan region	FR-BFC	Bourgogne-Franche-Comté		fr		
 metropolitan region	FR-BRE	Bretagne		fr		
+metropolitan region	FR-BRE	Brittany		en		
 metropolitan department	FR-14	Calvados		fr		FR-NOR
 metropolitan department	FR-15	Cantal		fr		FR-ARA
 metropolitan region	FR-CVL	Centre-Val de Loire		fr		
@@ -28,6 +29,7 @@ metropolitan department	FR-18	Cher		fr		FR-CVL
 dependency	FR-CP	Clipperton		fr		
 metropolitan department	FR-19	Corrèze		fr		FR-NAQ
 metropolitan collectivity with special status	FR-20R	Corse		fr		
+metropolitan collectivity with special status	FR-20R	Corsica		en		
 metropolitan department	FR-2A	Corse-du-Sud		fr		FR-20R
 metropolitan department	FR-23	Creuse		fr		FR-NAQ
 metropolitan department	FR-21	Côte-d'Or		fr		FR-BFC
@@ -48,6 +50,7 @@ overseas department	FR-971	Guadeloupe		fr		FR-GP
 overseas region	FR-GP	Guadeloupe (see also separate country code entry under GP)		fr		
 overseas department	FR-973	Guyane (française)		fr		FR-GF
 overseas region	FR-GF	Guyane (française) (see also separate country code entry under GF)		fr		
+overseas region	FR-GF	French Guiana		en		
 metropolitan department	FR-68	Haut-Rhin		fr		FR-GES
 metropolitan department	FR-2B	Haute-Corse		fr		FR-20R
 metropolitan department	FR-31	Haute-Garonne		fr		FR-OCC
