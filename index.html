@@ -89,7 +89,10 @@
 		function iso(code){
 			return "<a href='https://www.iso.org/obp/ui/#iso:code:3166:"+code+"'>ISO 3166-2:"+code+"</a>"
 		}
-		//document.getElementById("isolinks").innerHTML = ["AT","CA","CH","DE","GB","MX","US"].map(iso)
+
+		function wiki(code){
+			return `<a href='https://en.wikipedia.org/wiki/ISO_3166-2:${code}'>wiki/ISO_3166-2:${code}</a>`
+		}
 
 		// Do stuff when we got the list of all countries
 		function renderCountry(code, country) {
@@ -128,7 +131,7 @@
 					var cname = data["regions.json"][c];
 					let li = document.createElement('li');
 					ul.appendChild(li);
-					li.innerHTML += `${counts[c].num} from ${iso(c)} of ${cname} (${c})`
+					li.innerHTML += `${counts[c].num} of ${cname} (${c}) from ${iso(c)} and ${wiki(c)}`
 					let div = document.createElement('span');
 					div.classList.add("flags");
 					li.appendChild(div);
