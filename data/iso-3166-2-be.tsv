@@ -7,6 +7,7 @@ province	BE-VAN	Antwerpen		nl		BE-VLG
 province	BE-WBR	Brabant wallon		fr		BE-WAL
 region	BE-BRU	Brussels Hoofdstedelijk Gewest		nl		
 region	BE-BRU	Bruxelles-Capitale, Région de		fr		
+region	BE-BRU	Brussels-Capital Region		en		
 province	BE-WHT	Hainaut		fr		BE-WAL
 province	BE-VLI	Limburg		nl		BE-VLG
 province	BE-WLG	Liège		fr		BE-WAL
@@ -14,6 +15,8 @@ province	BE-WLX	Luxembourg		fr		BE-WAL
 province	BE-WNA	Namur		fr		BE-WAL
 province	BE-VOV	Oost-Vlaanderen		nl		BE-VLG
 region	BE-VLG	Vlaams Gewest		nl		
+region	BE-VLG	Flanders		en		
 province	BE-VBR	Vlaams-Brabant		nl		BE-VLG
 province	BE-VWV	West-Vlaanderen		nl		BE-VLG
 region	BE-WAL	wallonne, Région		fr		
+region	BE-WAL	Wallonia		en		
