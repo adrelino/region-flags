@@ -23,7 +23,7 @@ function get_output_dimensions() {
 }
 
 function check_arguments(callback) {
-    if (process.argv.length != 3) {
+    if (process.argv.length < 3) {
         console.log(help_message)
         process.exit(1)
     }
@@ -41,7 +41,10 @@ function check_arguments(callback) {
             fs.mkdirSync(output_folder+"_temp");
         }
 
-        callback()
+        var regex = process.argv[3] || "";
+        console.log("regex: " + regex);
+
+        callback(regex)
     }
     else {
         console.log(help_message)
@@ -79,7 +82,7 @@ function check_for_imagemin(callback) {
     })
 }
 
-function get_all_svgs(callback) {
+function get_all_svgs(regex, callback) {
     fs.readdir(svg_directory, function(err, items) {
         if (err) {
             console.log("Could not list *.svg files. You probably ran this command from the wrong working directory.")
@@ -87,6 +90,9 @@ function get_all_svgs(callback) {
             process.exit(1)
         }
 
+        if(regex){
+            items = items.filter(path => RegExp(regex).test(path));
+        }
         //items = items.filter(path => /^[a-z\-]+\.svg$/.test(path))
         callback(items)
     }, (error) => {})
@@ -103,17 +109,17 @@ function convert_and_compress_svg(path_to_svg, outdir) {
     if(!err) return;
         var svgexport_command = "svgexport " + path_to_svg + " " + path_to_tmp_png + " pad " + get_output_dimensions();
         exec(svgexport_command, (error, stdout, stderr) => {
-            if (error) {
-                console.log("Failed svgexport: " + path_to_svg);
+            if (error || stderr) {
+                console.log(svgexport_command);
+                console.log("Failed svgexport: " + path_to_svg,stderr);
                 process.exit(1);
             }
             var image_min_command = "imagemin " + path_to_tmp_png + " --out-dir=" + outdir;
             exec(image_min_command, (error, stdout, stderr) => {
                 // Always remove temp file
                 //fs.unlink(path_to_tmp_png, (error) => {});
-
-                if (error) {
-                    console.log("Failed imagemin: " + path_to_svg);
+                if (error || stderr) {
+                    console.log("Failed imagemin: " + path_to_svg,stderr);
                     process.exit(1);
                 }
             });
@@ -134,10 +140,10 @@ function convert_all_files(svgs, callback) {
 }
 
 // Run the program
-check_arguments(() =>
+check_arguments((regex) =>
     check_for_imagemin(() =>
     check_for_svgexport(() =>
-    get_all_svgs((svgs) => convert_all_files(svgs, () => {
+    get_all_svgs(regex, (svgs) => convert_all_files(svgs, () => {
         console.log("All SVGs converted to PNG!")
         process.exit(0)
     })
