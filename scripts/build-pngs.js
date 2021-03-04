@@ -37,6 +37,10 @@ function check_arguments(callback) {
             fs.mkdirSync(output_folder)
         }
 
+        if (!fs.existsSync(output_folder+"_temp")){
+            fs.mkdirSync(output_folder+"_temp");
+        }
+
         callback()
     }
     else {
@@ -88,52 +92,45 @@ function get_all_svgs(callback) {
     }, (error) => {})
 }
 
-function convert_and_compress_svg(path_to_svg, callback) {
-    var path_to_tmp_png = path_to_svg.substring(0, path_to_svg.length - 4) + '.png'
+function convert_and_compress_svg(path_to_svg, outdir) {
+    var filenameSVG = path.basename(path_to_svg);
+    var filenamePNG = filenameSVG.substring(0, filenameSVG.length - 4) + '.png';
 
-    var outpath = path.join(get_output_directory(),path.basename(path_to_tmp_png));
-    if(fs.existsSync(outpath)){
-        console.log(outpath + " exists");
-        callback()
-    }
-    var svgexport_command = "svgexport " + path_to_svg + " " + path_to_tmp_png + " pad " + get_output_dimensions()
-    console.log(svgexport_command)
-    exec(svgexport_command, (error, stdout, stderr) => {
-        if (error) {
-            console.log("Failed to convert SVG: " + path_to_svg)
-            process.exit(1)
-        }
+    var path_to_tmp_png = path.join(outdir+"_temp",filenamePNG);
+    var outpath = path.join(outdir,filenamePNG);
 
-        var image_min_command = "imagemin " + path_to_tmp_png + " --out-dir=" + get_output_directory()
-        console.log(image_min_command)
-        exec(image_min_command, (error, stdout, stderr) => {
-            // Always remove temp file
-            fs.unlink(path_to_tmp_png, (error) => {})
-
+    fs.access(outpath, err => {
+    if(!err) return;
+        var svgexport_command = "svgexport " + path_to_svg + " " + path_to_tmp_png + " pad " + get_output_dimensions();
+        exec(svgexport_command, (error, stdout, stderr) => {
             if (error) {
-                console.log("Failed to convert SVG: " + path_to_svg)
-                process.exit(1)
+                console.log("Failed svgexport: " + path_to_svg);
+                process.exit(1);
             }
+            var image_min_command = "imagemin " + path_to_tmp_png + " --out-dir=" + outdir;
+            exec(image_min_command, (error, stdout, stderr) => {
+                // Always remove temp file
+                //fs.unlink(path_to_tmp_png, (error) => {});
 
-            callback()
-        })
-    })
+                if (error) {
+                    console.log("Failed imagemin: " + path_to_svg);
+                    process.exit(1);
+                }
+            });
+        });
+    });
 }
 
 function convert_all_files(svgs, callback) {
-    var i = 0
+    var outdir = get_output_directory()
 
-    function do_next_file() {
-        console.log("Converting [" + (i+1) + "/" + svgs.length + "] " + svgs[i])
-        ++i
-        if (i >= svgs.length) {
-            callback()
-            return
-        }
-        convert_and_compress_svg(svg_directory + svgs[i-1], do_next_file)
-    }
+    console.log("Converting " + svgs.length + " to "+ outdir);
 
-    do_next_file()
+    svgs.forEach(function(svg){
+        convert_and_compress_svg(svg_directory + svg, outdir)
+    },this);
+
+    console.log("Converting " + svgs.length + " done");
 }
 
 // Run the program
