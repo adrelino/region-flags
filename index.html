@@ -98,9 +98,11 @@
 		function renderCountry(code, country) {
 			return (
 				'<figure class="flag">' +
-					'<a href="html/' + code + '"><img src="svg/' + code + '.svg"></a>' +
+					'<a href="html/' + code + '"><img src="pngWx64px/' + code + '.png"></a>' +
 					'<figcaption>' +
-					code +": "+country +
+					code +": "+country + " " +
+					`<a href="svg/${code}.svg">svg</a>` +
+					` | <a href="png/${code}.png">png</a>` +
 					'</figcaption>' +
 				'</figure>'
 			);
@@ -128,10 +130,10 @@
 				}
 				var ul = document.getElementById("subregion-list");
 				for(var c in counts){
-					var cname = data["regions.json"][c];
+					//var cname = data["regions.json"][c];
 					let li = document.createElement('li');
 					ul.appendChild(li);
-					li.innerHTML += `${counts[c].num} of ${cname} (${c}) from ${iso(c)} and ${wiki(c)}`
+					li.innerHTML += `${counts[c].num} of ${c} from ${iso(c)} and ${wiki(c)}`;//${cname} 
 					let div = document.createElement('span');
 					div.classList.add("flags");
 					li.appendChild(div);
